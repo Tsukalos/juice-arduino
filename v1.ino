@@ -8,7 +8,7 @@ int bomba1 = 12;
 int bomba2 = 11;
 int led1 = 10;
 int led2 = 9;
-int led3 = 8; 
+int led3 = 7; 
 
 void setup()
 {
