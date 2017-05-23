@@ -1,14 +1,14 @@
 #include <LiquidCrystal.h>
  
-  LiquidCrystal lcd(0, 1, 5, 4, 3, 2);
+  LiquidCrystal lcd(0, 1, 5, 4, 3, 2); ///RS 0 .. EN  1.. D7 2.. D6 3.. D5 4.. D6 5
 
 int bot = 9;
 int menu = 0; 
 int bomba1 = 12;
 int bomba2 = 11;
-int led1 = 10;
+int led1 = 10; 
 int led2 = 9;
-int led3 = 7; 
+int led3 = 8; 
 
 void setup()
 {
@@ -17,7 +17,7 @@ void setup()
       pinMode(bomba2, OUTPUT);
       pinMode(led1, OUTPUT);
       pinMode(led2, OUTPUT);
-      pinMode(led3, OUTPUT);
+      pinMode(led3, OUTPUT);AASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
       lcd.begin(16, 2);      
 }
  
