@@ -41,7 +41,20 @@ void setup()
 }
 
 char ikey(){      //Função para retornar o caracter da tecla pressionada 
-
+ int lv[4] = {lin1, lin2, lin3, lin4};
+	int cv[4] = {col1, col2, col3, col4};
+	int i,j;
+	for(i = 0; i<4; i++)
+		digitalWrite(lv[i],HIGH);
+	
+	for(i = 0; i<4; i++)
+		if(digitalRead(lv[i]) == 0){
+			for(j = 0; j<4; j++){
+				if(digitalRead(cv[i]) == 0){
+				}
+			}
+		}
+ /*
     digitalWrite(lin1, LOW); 
     digitalWrite(lin2, HIGH); 
     digitalWrite(lin3, HIGH); 
@@ -81,7 +94,7 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
     if(digitalRead(col3) == 0) return '4';
     if(digitalRead(col2) == 0) return '7';
     if(digitalRead(col1) == 0) return '*';
-
+*/
    return ' ';
 }
  
