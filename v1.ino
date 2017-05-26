@@ -41,19 +41,81 @@ void setup()
 }
 
 char ikey(){      //Função para retornar o caracter da tecla pressionada 
- int lv[4] = {lin1, lin2, lin3, lin4};
+	char check_char(int i, int j){
+		switch(i){
+			case 0:
+				if(j == 4)
+					return 'a';
+				else{
+					if(j == 3)
+						return 'b';
+					else{
+						if(j == 2)
+							return 'c';
+						else
+							return 'd';
+					}
+				}
+				break;
+			case 1:
+				if(j == 4)
+					return '3';
+				else{
+					if(j == 3)
+						return '6';
+					else{
+						if(j == 2)
+							return '9';
+						else
+							return '#';
+					}
+				}
+				break;
+			case 2:
+				if(j == 4)
+					return '2';
+				else{
+					if(j == 3)
+						return '5';
+					else{
+						if(j == 2)
+							return '8';
+						else
+							return '0';
+					}
+				}
+				break;
+			case 3:
+				if(j == 4)
+					return '1';
+				else{
+					if(j == 3)
+						return '4';
+					else{
+						if(j == 2)
+							return '7';
+						else
+							return '*';
+					}
+				}
+				break;
+		}
+		return ' ';
+	}//end check_char
+	
+	
+	int lv[4] = {lin1, lin2, lin3, lin4};
 	int cv[4] = {col1, col2, col3, col4};
 	int i,j;
-	for(i = 0; i<4; i++)
-		digitalWrite(lv[i],HIGH);
-	
-	for(i = 0; i<4; i++)
-		if(digitalRead(lv[i]) == 0){
-			for(j = 0; j<4; j++){
-				if(digitalRead(cv[i]) == 0){
-				}
-			}
+	for(i = 0; i<4; i++){
+		digitalWrite(lv[i],LOW);
+		for(j = 0; j < 4; j++){
+			if (digitalRead(cv[j]) == 0)
+				return check_char(i,j);
 		}
+	}
+	
+	return ' ';
  /*
     digitalWrite(lin1, LOW); 
     digitalWrite(lin2, HIGH); 
@@ -95,7 +157,6 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
     if(digitalRead(col2) == 0) return '7';
     if(digitalRead(col1) == 0) return '*';
 */
-   return ' ';
 }
  
 void loop()
