@@ -39,9 +39,7 @@ void setup()
 
       lcd.clear(); 
 }
-
-char ikey(){      //Função para retornar o caracter da tecla pressionada 
-	char check_char(int i, int j){
+char check_char(int i, int j){
 		switch(i){
 			case 0:
 				if(j == 4)
@@ -102,8 +100,7 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
 		}
 		return ' ';
 	}//end check_char
-	
-	
+char ikey(){      //Função para retornar o caracter da tecla pressionada 
 	int lv[4] = {lin1, lin2, lin3, lin4};
 	int cv[4] = {col1, col2, col3, col4};
 	int i,j;
