@@ -113,6 +113,7 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
 			if (digitalRead(cv[j]) == 0)
 				return check_char(i,j);
 		}
+		digitalWrite(lv[i], HIGH);
 	}
 	
 	return ' ';
