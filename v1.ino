@@ -8,21 +8,17 @@
 #define pino_echo A4
  
 Ultrasonic ultrasonic(pino_trigger, pino_echo);
-/*
-int bot = 9;
-int menu = 0; 
-int bomba1 = 12;
-int bomba2 = 11;
-int led_dis = A4; 
-//int led1 = 10; 
-//int led2 = 9;
-//int led3 = 8; */
+
+int bba = A1;
+
 int lin1 = 13, lin2 = 12, lin3 = 11,  lin4 = 10; 
-int col1 = 9, col2 = 8, col3 = 7, col4 = 6; 
+int col1 = A0, col2 = 8, col3 = 7, col4 = 6; 
 char stri[16];
 
 void setup()
 {
+     
+      pinMode(bba, OUTPUT);
       //PINOS DO TECLADO MATRICIAL 
       pinMode(lin1, OUTPUT); 
       pinMode(lin2, OUTPUT); 
@@ -33,28 +29,10 @@ void setup()
       pinMode(col3, INPUT_PULLUP); 
       pinMode(col4, INPUT_PULLUP); 
       
-/*      //OUTROS PINOS 
-      pinMode(bot, INPUT);
-      pinMode(bomba1, OUTPUT);
-      pinMode(bomba2, OUTPUT);
-      pinMode(led_dis, OUTPUT); 
-      //pinMode(led1, OUTPUT);
-      //pinMode(led2, OUTPUT);
-      //pinMode(led3, OUTPUT);*/
-
       lcd.begin(16, 2);      
       lcd.clear(); 
-      
-      lcd.clear(); 
-      lcd.setCursor(0, 0);                //Menu principal 
-      lcd.print("Maquina de suco");
-      lcd.setCursor(0, 1);
-      lcd.print("Escolha o suco "); 
-      delay(1500); 
-      lcd.clear(); 
-      
-      //Serial.begin(9600); 
 }
+
 char check_char(int i, int j){
 	switch(i){
 		case 0:
@@ -136,6 +114,16 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
 		digitalWrite(lv[i], HIGH);
 	}	
 	return ' ';
+} 
+void menu(){
+            
+      lcd.clear(); 
+      lcd.setCursor(0, 0);                //Menu principal 
+      lcd.print("Maquina de suco");
+      lcd.setCursor(0, 1);
+      lcd.print("Escolha o suco "); 
+      delay(1500); 
+      lcd.clear();  
 }
 void copo()
 {
@@ -197,15 +185,16 @@ void bomba(int t){
       lcd.setCursor(0,0); 
       lcd.print("Despejando suco!"); 
       
+      //tem = tem * 1000; 
+      digitalWrite(bba, HIGH); 
       delay(t*1000); 
+      digitalWrite(bba, LOW);  
       
       lcd.clear(); 
       lcd.setCursor(0,0); 
       lcd.print("Bon apettiti! :) ");    
       delay(5000); 
-        //digitalWrite(bomba, HIGH); 
-      //delay(t*1000); 
-      //digitalWrite(bomba, LOW); 
+      
 }
 
 void ler(){
@@ -221,14 +210,15 @@ void ler(){
  void loop()
 {                         
              int tempo;  
-             ler(); 
+	     menu(); 
+             //ler(); 
              copo(); 
-             bomba(3); 
+             bomba(4); 
                           
              while(true){
               lcd.clear(); 
               lcd.setCursor(0,0); 
-              lcd.print("Dig din");
+              lcd.print("nois eh patrao!!!");
               delay(500);               
              }
 }
