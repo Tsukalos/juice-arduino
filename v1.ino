@@ -187,7 +187,7 @@ int cheio()
     {
         lcd.clear(); 
         lcd.setCursor(0,0); 
-        lcd.print("Colocando pouco"); 
+        lcd.print("Colocando"); 
         lcd.setCursor(0,1);  
         lcd.print("Suco..."); 
         tem(1500); 
@@ -197,7 +197,7 @@ int cheio()
        {
           lcd.clear(); 
           lcd.setCursor(0,0); 
-          lcd.print("Colocando meio");
+          lcd.print("Colocando");
           lcd.setCursor(0,1);  
           lcd.print("Suco..."); 
           tem(1500);
@@ -207,7 +207,7 @@ int cheio()
              {
                 lcd.clear(); 
                 lcd.setCursor(0,0); 
-                lcd.print("Colocando bastante");
+                lcd.print("Colocando");
                 lcd.setCursor(0,1);  
                 lcd.print("Suco..."); 
                 tem(1500);
