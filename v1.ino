@@ -99,6 +99,7 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
 	int lv[4] = {lin1, lin2, lin3, lin4}; 
 	int cv[4] = {col1, col2, col3, col4};
 	
+
 	int i,j;
 	
 	//Todos os pinos da fileira lin são setados como high.
@@ -115,22 +116,39 @@ char ikey(){      //Função para retornar o caracter da tecla pressionada
 	}	
 	return ' ';
 } 
+void tem(int q)
+{
+    delay(q); 
+}
 void menu(){
             
       lcd.clear(); 
       lcd.setCursor(0, 0);                //Menu principal 
       lcd.print("Maquina de suco");
       lcd.setCursor(0, 1);
-      lcd.print("Escolha o suco "); 
+      lcd.print(" Suco de Uva! "); 
       delay(1500); 
+      do{
+      }while(ikey() == ' ');
+      tem(1500);  
       lcd.clear();  
+     
 }
-void copo()
+
+int distancia()
 {
-     int dis;   
+      int dis;   
      float cmMsec;
      long microsec = ultrasonic.timing();
      cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
+//     long microsec = ultrasonic.timing();
+     dis = (int)ultrasonic.convert(microsec, Ultrasonic::CM);
+     return dis;   
+}
+
+void copo()
+{
+     int d;   
       
      lcd.clear(); 
      lcd.setCursor(0,0); 
@@ -138,87 +156,131 @@ void copo()
      lcd.setCursor(0,1); 
      lcd.print("Distancia:"); 
      do{
-      long microsec = ultrasonic.timing();
-      dis = (int)ultrasonic.convert(microsec, Ultrasonic::CM);
+      d = distancia(); 
       lcd.setCursor(11,1); 
       lcd.print("   "); 
       lcd.setCursor(11,1); 
-      lcd.print(dis);   
-      delay(300);     
-     } while(dis > 3); 
+      lcd.print(d);   
+      tem(300);     
+     } while(d > 5); 
      
      lcd.clear();
      lcd.setCursor(0,0); 
      lcd.print("Copo detectado");   
+     tem(3000); 
 }
 
-void tempo(int *n)
-{
+int cheio()
+{  
+    int aux = 0;
+    
+    tem(300); 
     lcd.clear();
     lcd.setCursor(0,0); 
-    lcd.print("Digite o tempo:"); 
-    lcd.print(ikey());  
-    while(ikey() != ' ') {}  
+    lcd.print("Suco:");
+    lcd.print(" 1-Pouco");  
+    lcd.setCursor(0,1); 
+    lcd.print("2-Medio 3-Cheio"); 
+
+    do{
+    if(ikey() == '1')
+    {
+        lcd.clear(); 
+        lcd.setCursor(0,0); 
+        lcd.print("Colocando pouco"); 
+        lcd.setCursor(0,1);  
+        lcd.print("Suco..."); 
+        tem(1500); 
+        aux = 7;
+     }else 
+       if(ikey() == '2')
+       {
+          lcd.clear(); 
+          lcd.setCursor(0,0); 
+          lcd.print("Colocando meio");
+          lcd.setCursor(0,1);  
+          lcd.print("Suco..."); 
+          tem(1500);
+          aux = 13;
+       } else 
+             if(ikey() == '3')
+             {
+                lcd.clear(); 
+                lcd.setCursor(0,0); 
+                lcd.print("Colocando bastante");
+                lcd.setCursor(0,1);  
+                lcd.print("Suco..."); 
+                tem(1500);
+                aux = 20;
+             }
+             
+    }while(aux == 0); 
+    
+    return aux; 
 }
 
-void ret(){
+void ret(){	
+      int i; 
+	for(i = 0; i < 3; i++){
       delay(1000); 
       lcd.print("."); 
-      delay(1000); 
-      lcd.print("."); 
-      delay(1000); 
-      lcd.print("."); 
-      delay(2000); 
+      }
+      delay(2000); 		
 }
 
-void bomba(int t){
+void bomba(int r){
    
       lcd.clear(); 
       lcd.setCursor(0,0); 
       lcd.print("Tempo : "); 
-      lcd.print(t); 
+      lcd.print(r); 
+      lcd.print(" s"); 
       lcd.setCursor(0,1); 
       lcd.print("Ligando motor"); 
       ret(); 
+      
+      if(distancia() > 5)
+      {
+            lcd.clear(); 
+           do
+          {
+              lcd.setCursor(0,0); 
+              lcd.print("Sem copo!"); 
+              lcd.setCursor(0,1); 
+              lcd.print("Coloque o copo!"); 
+              delay(150); 
+          } while(distancia() > 5); 
+          
+          lcd.clear(); 
+          lcd.setCursor(0,0);
+          lcd.print("Retomando"); 
+          ret(); 
+          delay(500); 
+      }
       
       lcd.clear(); 
       lcd.setCursor(0,0); 
       lcd.print("Despejando suco!"); 
       
-      //tem = tem * 1000; 
       digitalWrite(bba, HIGH); 
-      delay(t*1000); 
+      while(r > 0)
+      {
+        delay(1000); 
+        r--; 
+      }
       digitalWrite(bba, LOW);  
       
       lcd.clear(); 
       lcd.setCursor(0,0); 
-      lcd.print("Bon apettiti! :) ");    
-      delay(5000); 
-      
+      lcd.print("Suco despejado!");    
+      delay(4000);       
 }
 
-void ler(){
-      
-      lcd.clear();
-//      lcd.setCursor(0,0); 
-      while (true) {
-        lcd.setCursor(0,0);  
-        lcd.print(ikey()); 
-      }
-    
-}
  void loop()
 {                         
-             int tempo;  
-	     menu(); 
-             //ler(); 
-             copo(); 
-             bomba(4); 
-                          
-             while(true){
-              lcd.clear(); 
-              lcd.setCursor(0,0); 
-              lcd.print("nois eh patrao!!!");
-              delay(500);               
-             }
+       int t = 0; 
+       menu(); 
+       t = cheio(); 
+       copo(); 
+       bomba(t);                                     
 }
